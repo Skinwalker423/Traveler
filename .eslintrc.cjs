@@ -7,6 +7,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:react/jsx-runtime",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
@@ -28,5 +29,10 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
   },
 };
