@@ -9,16 +9,27 @@ import "./index.css";
 import Pricing from "./pages/Pricing";
 import RootLayout from "./pages/RootLayout";
 import ErrorPage from "./pages/ErrorPage";
+import ProductPage from "./pages/ProductPage";
+import Homepage from "./pages/Homepage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "products",
+        element: <ProductPage />,
+      },
+      {
         path: "pricing",
         element: <Pricing />,
+      },
+      {
+        path: "/",
+        element: <Homepage />,
       },
     ],
   },
