@@ -1,0 +1,17 @@
+.link:active,
+.link:hover,
+link:focus {
+  color: red;
+  text-decoration: none;
+}
+
+.link {
+  color: black;
+}
+
+.nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}

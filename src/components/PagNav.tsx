@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import styles from "./PagNav.module.css";
 
 const LINKS = [
   {
@@ -17,12 +18,14 @@ const LINKS = [
 
 export const PagNav = () => {
   return (
-    <nav>
+    <nav className={styles.nav}>
       <ul>
         {LINKS.map(({ label, to }) => {
           return (
             <li key={label}>
-              <Link to={to}>{label}</Link>
+              <NavLink className={styles.link} to={to}>
+                {label}
+              </NavLink>
             </li>
           );
         })}

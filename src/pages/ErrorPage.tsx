@@ -1,4 +1,5 @@
 import { useRouteError } from "react-router-dom";
+import { PagNav } from "../components/PagNav";
 
 export default function ErrorPage() {
   const error: any = useRouteError();
@@ -6,6 +7,7 @@ export default function ErrorPage() {
 
   return (
     <div id='error-page'>
+      <PagNav />
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p>
