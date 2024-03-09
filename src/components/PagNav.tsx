@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styles from "./PagNav.module.css";
+import Logo from "./Logo";
 
 const LINKS = [
   {
@@ -14,11 +15,16 @@ const LINKS = [
     label: "Pricing",
     to: "/pricing",
   },
+  {
+    label: "Login",
+    to: "/login",
+  },
 ];
 
 export const PagNav = () => {
   return (
     <nav className={styles.nav}>
+      <Logo />
       <ul>
         {LINKS.map(({ label, to }) => {
           return (

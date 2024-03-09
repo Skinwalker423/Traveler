@@ -9,9 +9,10 @@ import "./index.css";
 import Pricing from "./pages/Pricing";
 
 import ErrorPage from "./pages/ErrorPage";
-import ProductPage from "./pages/ProductPage";
 import Homepage from "./pages/Homepage";
 import AppLayout from "./pages/AppLayout";
+import Product from "./pages/Product";
+import Login from "./pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: "products",
-    element: <ProductPage />,
+    element: <Product />,
   },
   {
     path: "pricing",
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "app",
     element: <AppLayout />,
+  },
+  {
+    path: "login",
+    element: <Login />,
   },
 ]);
 
