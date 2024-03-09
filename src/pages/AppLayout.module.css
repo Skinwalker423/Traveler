@@ -1,10 +1,7 @@
-.rootContainer {
-  width: 100%;
-}
-
-.header {
+.app {
+  height: 100vh;
+  padding: 2.4rem;
+  overscroll-behavior-y: none;
   display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
+  position: relative;
 }
