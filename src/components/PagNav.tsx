@@ -27,9 +27,13 @@ export const PagNav = () => {
       <Logo />
       <ul>
         {LINKS.map(({ label, to }) => {
+          const classStyles =
+            label === "Login"
+              ? styles.ctaLink
+              : styles.link;
           return (
             <li key={label}>
-              <NavLink className={styles.link} to={to}>
+              <NavLink className={classStyles} to={to}>
                 {label}
               </NavLink>
             </li>
