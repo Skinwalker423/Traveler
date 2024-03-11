@@ -21,9 +21,9 @@ function Form() {
   return (
     <form className={styles.form}>
       <div className={styles.row}>
-        <label htmlFor="cityName">City name</label>
+        <label htmlFor='cityName'>City name</label>
         <input
-          id="cityName"
+          id='cityName'
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
         />
@@ -31,18 +31,22 @@ function Form() {
       </div>
 
       <div className={styles.row}>
-        <label htmlFor="date">When did you go to {cityName}?</label>
+        <label htmlFor='date'>
+          When did you go to {cityName}?
+        </label>
         <input
-          id="date"
+          id='date'
           onChange={(e) => setDate(e.target.value)}
           value={date}
         />
       </div>
 
       <div className={styles.row}>
-        <label htmlFor="notes">Notes about your trip to {cityName}</label>
+        <label htmlFor='notes'>
+          Notes about your trip to {cityName}
+        </label>
         <textarea
-          id="notes"
+          id='notes'
           onChange={(e) => setNotes(e.target.value)}
           value={notes}
         />
