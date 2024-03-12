@@ -14,6 +14,7 @@ import AppLayout from "./pages/AppLayout";
 import Product from "./pages/Product";
 import Login from "./pages/Login";
 import CityList from "./components/CityList";
+import CountryList from "./components/CountryList";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "cities",
         element: <CityList />,
+      },
+      {
+        path: "countries",
+        element: <CountryList />,
       },
     ],
   },
