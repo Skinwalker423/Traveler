@@ -13,6 +13,7 @@ import Homepage from "./pages/Homepage";
 import AppLayout from "./pages/AppLayout";
 import Product from "./pages/Product";
 import Login from "./pages/Login";
+import CityList from "./components/CityList";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,12 @@ const router = createBrowserRouter([
   {
     path: "app",
     element: <AppLayout />,
+    children: [
+      {
+        path: "cities",
+        element: <CityList />,
+      },
+    ],
   },
   {
     path: "login",
