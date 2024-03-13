@@ -11,7 +11,7 @@
 }
 
 .nav a:link,
-.nav a:visited {
+a:visited {
   display: block;
   color: inherit;
   text-decoration: none;
@@ -23,6 +23,7 @@
 }
 
 /* CSS Modules feature */
-.nav a:global(.active) {
-  background-color: var(--color-dark--0);
+.nav a:global(:active),
+nav a:focus {
+  background-color: var(--color-dark--0) !important;
 }
