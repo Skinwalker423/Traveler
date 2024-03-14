@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./CityList.module.css";
+import { City } from "../types";
+import CityItem from "./CityItem";
 
 const CityList = () => {
-  const [cities, setCities] = useState<any>([]);
+  const [cities, setCities] = useState<City[]>([]);
 
   const fetchCities = async () => {
     const response = await fetch(
@@ -22,7 +24,7 @@ const CityList = () => {
   if (!cities.length) return null;
 
   const renderCities = cities.map((city) => {
-    return <p key={city.id}>{city.cityName}</p>;
+    return <CityItem city={city} key={city.id} />;
   });
 
   return (
