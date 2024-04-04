@@ -12,7 +12,7 @@ const CityItem = ({ city }: CityProps) => {
 
   return (
     <li className={styles.cityItem}>
-      <span className={styles.emoji}>{city.emoji}</span>
+      <span className={styles.emoji}>{city.emoji} </span>
       <h3 className={styles.name}>{city.cityName}</h3>
       <time className={styles.date}>{formattedDate}</time>
     </li>

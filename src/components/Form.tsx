@@ -8,7 +8,9 @@ import styles from "./Form.module.css";
 function Form() {
   const [cityName, setCityName] = useState("");
   // const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState<Date | string>(
+    new Date()
+  );
   const [notes, setNotes] = useState("");
 
   return (
@@ -30,7 +32,7 @@ function Form() {
         <input
           id='date'
           onChange={(e) => setDate(e.target.value)}
-          value={date}
+          value={date.toLocaleString()}
         />
       </div>
 
