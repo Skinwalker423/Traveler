@@ -1,25 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import styles from "./CityList.module.css";
-import { City } from "../types";
 import CityItem from "./CityItem";
+import { LocationContext } from "../context/LocationContext";
 
 const CityList = () => {
-  const [cities, setCities] = useState<City[]>([]);
+  const { cities } = useContext(LocationContext);
 
-  const fetchCities = async () => {
-    const response = await fetch(
-      "http://localhost:3000/cities"
-    );
-    const citiesData = await response.json();
-    if (citiesData.length) {
-      setCities(citiesData);
-    }
-    console.log("response", response);
-  };
-
-  useEffect(() => {
-    fetchCities();
-  }, []);
+  console.log("cities", cities);
 
   if (!cities.length) return null;
 

@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
 import Form from "./components/Form";
+import { LocationProvider } from "./context/LocationContext";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,8 @@ ReactDOM.createRoot(
   document.getElementById("root")!
 ).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <LocationProvider>
+      <RouterProvider router={router} />
+    </LocationProvider>
   </React.StrictMode>
 );

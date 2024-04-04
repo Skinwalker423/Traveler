@@ -6,7 +6,13 @@ import {
 } from "react";
 import { City } from "../types";
 
-export const LocationContext = createContext({});
+interface LocationContextType {
+  cities: City[];
+}
+
+export const LocationContext = createContext(
+  {} as LocationContextType
+);
 
 export const LocationProvider = ({
   children,
