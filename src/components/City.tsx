@@ -14,12 +14,12 @@ function City() {
     useContext(LocationContext);
   const [city, setCity] = useState<City | null>();
   console.log("params", params);
-  const currentCity = {
-    cityName: "Lisbon",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    notes: "My favorite city so far!",
-  };
+  // const currentCity = {
+  //   cityName: "Lisbon",
+  //   emoji: "🇵🇹",
+  //   date: "2027-10-31T15:59:59.138Z",
+  //   notes: "My favorite city so far!",
+  // };
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,7 +37,9 @@ function City() {
 
   console.log("city", city);
 
-  const { cityName, emoji, date, notes } = currentCity;
+  if (!city) return null;
+
+  const { cityName, emoji, date, notes } = city;
 
   return (
     <div className={styles.city}>
