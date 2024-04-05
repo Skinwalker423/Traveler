@@ -9,6 +9,9 @@ import { City } from "../types";
 interface LocationContextType {
   cities: City[];
   isLoading: boolean;
+  setIsLoading: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 }
 
 export const LocationContext = createContext(
@@ -46,6 +49,7 @@ export const LocationProvider = ({
   const value = {
     cities,
     isLoading,
+    setIsLoading,
   };
 
   return (

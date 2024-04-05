@@ -1,14 +1,41 @@
 import styles from "./City.module.css";
 import { formatDate } from "../utils";
+import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { LocationContext } from "../context/LocationContext";
+import { fetchCityById } from "../actions";
+import type { City } from "../types";
+import Spinner from "./Spinner";
 
 function City() {
   // TEMP DATA
+  const params = useParams();
+  const { setIsLoading, isLoading } =
+    useContext(LocationContext);
+  const [city, setCity] = useState<City | null>();
+  console.log("params", params);
   const currentCity = {
     cityName: "Lisbon",
     emoji: "🇵🇹",
     date: "2027-10-31T15:59:59.138Z",
     notes: "My favorite city so far!",
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (params.cityId) {
+      fetchCityById(params.cityId)
+        .then((data) => {
+          setCity(data);
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [params.cityId]);
+
+  if (!params.cityId) return null;
+  if (isLoading) return <Spinner />;
+
+  console.log("city", city);
 
   const { cityName, emoji, date, notes } = currentCity;
 
