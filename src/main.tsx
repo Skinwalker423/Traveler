@@ -17,6 +17,7 @@ import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
 import Form from "./components/Form";
 import { LocationProvider } from "./context/LocationContext";
+import City from "./components/City";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "cities",
         element: <CityList />,
+      },
+      {
+        path: "cities/:cityId",
+        element: <City />,
       },
       {
         path: "countries",
