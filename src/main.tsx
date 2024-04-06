@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
+  Navigate,
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
     element: <AppLayout />,
 
     children: [
+      {
+        index: true,
+        element: <Navigate to={"cities"} replace />,
+      },
       {
         path: "cities",
         element: <CityList />,
