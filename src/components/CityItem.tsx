@@ -12,8 +12,11 @@ const CityItem = ({ city }: CityProps) => {
   const formattedDate = formatDate(city.date);
 
   return (
-    <li className={styles.cityItem}>
-      <Link to={`/app/cities/${city.id}`}>
+    <li>
+      <Link
+        className={styles.cityItem}
+        to={`/app/cities/${city.id}?lat=${city.position.lat}&lng=${city.position.lng}`}
+      >
         <span className={styles.emoji}>{city.emoji} </span>
         <h3 className={styles.name}>{city.cityName}</h3>
         <time className={styles.date}>{formattedDate}</time>
