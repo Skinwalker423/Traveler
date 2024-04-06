@@ -1,4 +1,7 @@
-import { useSearchParams } from "react-router-dom";
+import {
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import styles from "./Map.module.css";
 
 const Map = () => {
@@ -6,6 +9,8 @@ const Map = () => {
     useSearchParams();
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
+  const navigate = useNavigate();
+  console.log("nav", navigate);
 
   const updateUrl = (lat: string, lng: string) => {
     setSearcghParams({
@@ -22,6 +27,14 @@ const Map = () => {
       <button onClick={() => updateUrl("25.5", "20")}>
         Update
       </button>
+      <div
+        role='presentation'
+        onClick={() => {
+          navigate(`/app/form?lat=${lat}&lng=${lng}`);
+          console.log("clicked");
+        }}
+        className={styles.mapTest}
+      ></div>
     </div>
   );
 };
