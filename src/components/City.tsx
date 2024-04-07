@@ -1,17 +1,16 @@
 import styles from "./City.module.css";
 import { formatDate } from "../utils";
 import { useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { LocationContext } from "../context/LocationContext";
+import { useEffect, useState } from "react";
 import { fetchCityById } from "../actions";
 import type { City } from "../types";
 import Spinner from "./Spinner";
+import useLocationContext from "../hooks/useLocationContext";
 
 function City() {
   // TEMP DATA
   const params = useParams();
-  const { setIsLoading, isLoading } =
-    useContext(LocationContext);
+  const { setIsLoading, isLoading } = useLocationContext();
   const [city, setCity] = useState<City | null>();
   console.log("params", params);
   // const currentCity = {

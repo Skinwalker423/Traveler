@@ -1,14 +1,12 @@
-import { useContext } from "react";
-
-import { LocationContext } from "../context/LocationContext";
 import Spinner from "./Spinner";
 import Message from "./Message";
 
 import styles from "./CountryList.module.css";
 import CountryItem from "./CountryItem";
+import useLocationContext from "../hooks/useLocationContext";
 
 const CountryList = () => {
-  const { cities, isLoading } = useContext(LocationContext);
+  const { cities, isLoading } = useLocationContext();
 
   if (isLoading) return <Spinner />;
 
