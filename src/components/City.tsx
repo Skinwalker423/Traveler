@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import type { City } from "../types";
 import Spinner from "./Spinner";
 import useLocationContext from "../hooks/useLocationContext";
+import Button from "./Button";
 
 function City() {
   // TEMP DATA
@@ -57,7 +58,9 @@ function City() {
         </a>
       </div>
 
-      <div>{/* <ButtonBack /> */}</div>
+      <div>
+        <Button type='back'>Back</Button>
+      </div>
     </div>
   );
 }

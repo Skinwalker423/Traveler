@@ -4,7 +4,7 @@ import styles from "./Button.module.css";
 
 interface ButtonProps extends PropsWithChildren {
   onClick?: () => void;
-  type?: string;
+  type?: "back" | "primary" | "position";
 }
 
 const Button = ({

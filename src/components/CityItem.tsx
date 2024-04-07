@@ -3,6 +3,7 @@ import { City } from "../types";
 import styles from "./CityItem.module.css";
 import { formatDate } from "../utils";
 import { Link } from "react-router-dom";
+import useLocationContext from "../hooks/useLocationContext";
 
 type CityProps = {
   city: City;
@@ -10,9 +11,15 @@ type CityProps = {
 
 const CityItem = ({ city }: CityProps) => {
   const formattedDate = formatDate(city.date);
+  const { currentCity } = useLocationContext();
 
+  const isActive = currentCity?.id === city.id;
   return (
-    <li>
+    <li
+      className={`${
+        isActive && styles["cityItem--active"]
+      }`}
+    >
       <Link
         className={styles.cityItem}
         to={`/app/cities/${city.id}?lat=${city.position.lat}&lng=${city.position.lng}`}
