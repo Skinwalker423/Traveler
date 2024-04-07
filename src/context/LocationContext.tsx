@@ -26,23 +26,22 @@ export const LocationProvider = ({
   const [cities, setCities] = useState<City[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCities = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        "http://localhost:3000/cities"
-      );
-      const citiesData = await response.json();
-
-      setCities(citiesData);
-    } catch (error: any) {
-      console.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchCities = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:3000/cities"
+        );
+        const citiesData = await response.json();
+
+        setCities(citiesData);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     fetchCities();
   }, []);
 
