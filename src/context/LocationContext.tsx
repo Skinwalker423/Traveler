@@ -9,9 +9,8 @@ import { City } from "../types";
 interface LocationContextType {
   cities: City[];
   isLoading: boolean;
-  setIsLoading: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
+  currentCity?: City;
+  fetchCurrentCity: (cityId: string) => Promise<void>;
 }
 
 export const LocationContext = createContext(
@@ -24,7 +23,26 @@ export const LocationProvider = ({
   children: ReactNode;
 }) => {
   const [cities, setCities] = useState<City[]>([]);
+  const [currentCity, setCurrentCity] = useState<City>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const fetchCurrentCity = async (
+    cityId: string
+  ): Promise<void> => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `http://localhost:3000/cities/${cityId}`
+      );
+
+      const data = await response.json();
+      setCurrentCity(data);
+    } catch (error: any) {
+      console.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -48,7 +66,8 @@ export const LocationProvider = ({
   const value = {
     cities,
     isLoading,
-    setIsLoading,
+    currentCity,
+    fetchCurrentCity,
   };
 
   return (

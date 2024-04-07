@@ -1,8 +1,7 @@
 import styles from "./City.module.css";
 import { formatDate } from "../utils";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchCityById } from "../actions";
+import { useEffect } from "react";
 import type { City } from "../types";
 import Spinner from "./Spinner";
 import useLocationContext from "../hooks/useLocationContext";
@@ -10,35 +9,21 @@ import useLocationContext from "../hooks/useLocationContext";
 function City() {
   // TEMP DATA
   const params = useParams();
-  const { setIsLoading, isLoading } = useLocationContext();
-  const [city, setCity] = useState<City | null>();
+  const { isLoading, currentCity, fetchCurrentCity } =
+    useLocationContext();
+  // const [city, setCity] = useState<City | null>();
   console.log("params", params);
-  // const currentCity = {
-  //   cityName: "Lisbon",
-  //   emoji: "🇵🇹",
-  //   date: "2027-10-31T15:59:59.138Z",
-  //   notes: "My favorite city so far!",
-  // };
 
   useEffect(() => {
-    setIsLoading(true);
-    if (params.cityId) {
-      fetchCityById(params.cityId)
-        .then((data) => {
-          setCity(data);
-        })
-        .finally(() => setIsLoading(false));
-    }
-  }, [params.cityId, setIsLoading]);
+    if (params.cityId) fetchCurrentCity(params.cityId);
+  }, [params.cityId]);
 
   if (!params.cityId) return null;
   if (isLoading) return <Spinner />;
 
-  console.log("city", city);
+  if (!currentCity) return null;
 
-  if (!city) return null;
-
-  const { cityName, emoji, date, notes } = city;
+  const { cityName, emoji, date, notes } = currentCity;
 
   return (
     <div className={styles.city}>
