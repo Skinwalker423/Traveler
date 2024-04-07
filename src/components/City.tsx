@@ -30,7 +30,7 @@ function City() {
         })
         .finally(() => setIsLoading(false));
     }
-  }, [params.cityId]);
+  }, [params.cityId, setIsLoading]);
 
   if (!params.cityId) return null;
   if (isLoading) return <Spinner />;
