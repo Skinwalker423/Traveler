@@ -3,6 +3,12 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import styles from "./Map.module.css";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+} from "react-leaflet";
 
 const Map = () => {
   const [searchParams, setSearcghParams] =
@@ -10,7 +16,6 @@ const Map = () => {
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
   const navigate = useNavigate();
-  console.log("nav", navigate);
 
   const updateUrl = (lat: string, lng: string) => {
     setSearcghParams({
@@ -18,24 +23,26 @@ const Map = () => {
       lng,
     });
   };
+  console.log("nav", navigate, lat, lng, updateUrl);
+  if (!lat || !lng) return null;
 
   return (
-    <div className={styles.mapContainer}>
-      <h2>Map Coordinates:</h2>
-      <p>Lat: {lat}</p>
-      <p>Long: {lng}</p>
-      <button onClick={() => updateUrl("25.5", "20")}>
-        Update
-      </button>
-      <div
-        role='presentation'
-        onClick={() => {
-          navigate(`/app/form?lat=${lat}&lng=${lng}`);
-          console.log("clicked");
-        }}
-        className={styles.mapTest}
-      ></div>
-    </div>
+    <MapContainer
+      className={styles.mapContainer}
+      center={[parseInt(lat), parseInt(lng)]}
+      zoom={13}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      />
+      <Marker position={[parseInt(lat), parseInt(lng)]}>
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+    </MapContainer>
   );
 };
 
