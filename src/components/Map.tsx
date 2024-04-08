@@ -1,4 +1,7 @@
-import { useSearchParams } from "react-router-dom";
+import {
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import styles from "./Map.module.css";
 import {
   MapContainer,
@@ -6,6 +9,7 @@ import {
   Popup,
   TileLayer,
   useMap,
+  useMapEvents,
 } from "react-leaflet";
 import useLocationContext from "../hooks/useLocationContext";
 import { useEffect, useState } from "react";
@@ -61,6 +65,7 @@ const Map = () => {
           );
         })}
         <ChangeCenter position={position} />
+        <MapForm />
       </MapContainer>
     </div>
   );
@@ -73,6 +78,19 @@ export const ChangeCenter = ({
 }) => {
   const map = useMap();
   map.setView(position);
+  return null;
+};
+
+export const MapForm = () => {
+  const navigate = useNavigate();
+  useMapEvents({
+    click(e) {
+      navigate(
+        `form?lat=${e.latlng.lat}lng=${e.latlng.lng}`
+      );
+    },
+  });
+
   return null;
 };
 
