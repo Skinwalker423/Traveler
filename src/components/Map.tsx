@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 const Map = () => {
   const [searchParams, setSearcghParams] =
     useSearchParams();
-  const { currentCity } = useLocationContext();
+  const { cities } = useLocationContext();
 
   const [position, setPosition] = useState<
     [lat?: number, lng?: number]
@@ -42,15 +42,25 @@ const Map = () => {
         className={styles.map}
         center={[parseInt(lat), parseInt(lng)]}
         zoom={13}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
         />
-        <Marker position={[parseInt(lat), parseInt(lng)]}>
-          <Popup>{currentCity?.notes}</Popup>
-        </Marker>
+        {cities.map((city) => {
+          return (
+            <Marker
+              key={city.id}
+              position={[
+                city.position.lat,
+                city.position.lng,
+              ]}
+            >
+              <Popup>{city.notes}</Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   );
