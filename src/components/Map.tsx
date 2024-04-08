@@ -5,6 +5,7 @@ import {
   Marker,
   Popup,
   TileLayer,
+  useMap,
 } from "react-leaflet";
 import useLocationContext from "../hooks/useLocationContext";
 import { useEffect, useState } from "react";
@@ -14,9 +15,8 @@ const Map = () => {
     useSearchParams();
   const { cities } = useLocationContext();
 
-  const [position, setPosition] = useState<
-    [lat?: number, lng?: number]
-  >([]);
+  const [position, setPosition] =
+    useState<[lat: number, lng: number]>();
 
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
@@ -33,15 +33,14 @@ const Map = () => {
     });
   };
   console.log("nav", updateUrl, setPosition);
-  if (!lat || !lng || !position[0] || !position[1])
-    return null;
+  if (!position) return null;
 
   return (
     <div className={styles.mapContainer}>
       <MapContainer
         className={styles.map}
-        center={[parseInt(lat), parseInt(lng)]}
-        zoom={13}
+        center={position}
+        zoom={8}
         scrollWheelZoom={true}
       >
         <TileLayer
@@ -61,9 +60,20 @@ const Map = () => {
             </Marker>
           );
         })}
+        <ChangeCenter position={position} />
       </MapContainer>
     </div>
   );
+};
+
+export const ChangeCenter = ({
+  position,
+}: {
+  position: [lat: number, lng: number];
+}) => {
+  const map = useMap();
+  map.setView(position);
+  return null;
 };
 
 export default Map;
