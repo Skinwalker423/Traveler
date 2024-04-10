@@ -61,6 +61,10 @@ function Form() {
   }, [lat, lng]);
 
   if (isLoadingGeo) return <Spinner />;
+  if (!lat && !lng)
+    return (
+      <Message message={"Start by clicking on the map"} />
+    );
   if (geoError) return <Message message={geoError} />;
 
   return (
