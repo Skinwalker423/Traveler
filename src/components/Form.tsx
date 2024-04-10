@@ -8,12 +8,14 @@ import Button from "./Button";
 import useUrlPosition from "../hooks/useUrlPosition";
 import Spinner from "./Spinner";
 import { convertToEmoji } from "../utils";
+import Message from "./Message";
 
 function Form() {
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [isLoadingGeo, setIsLoadingGeo] =
     useState<boolean>(false);
+  const [geoError, setGeoError] = useState("");
   const [date, setDate] = useState<Date | string>(
     new Date()
   );
@@ -27,6 +29,7 @@ function Form() {
 
   useEffect(() => {
     const fetchReverseGeo = async () => {
+      setGeoError("");
       setIsLoadingGeo(true);
       try {
         if (!lat || !lng) return;
@@ -35,12 +38,18 @@ function Form() {
         );
         const data = await response.json();
         console.log("cityName", data);
+        if (!data.countryCode) {
+          throw new Error(
+            "That's not a city. Click somewhere else 😊"
+          );
+        }
         const emo = convertToEmoji(data.countryCode);
         setCityName(data?.city || data?.locality || "");
         setCountry(data.countryName || "");
         setEmoji(emo);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Could not retrive city name");
+        setGeoError(error.message);
       } finally {
         setIsLoadingGeo(false);
       }
@@ -52,6 +61,7 @@ function Form() {
   }, [lat, lng]);
 
   if (isLoadingGeo) return <Spinner />;
+  if (geoError) return <Message message={geoError} />;
 
   return (
     <form className={styles.form}>
@@ -85,6 +95,9 @@ function Form() {
           onChange={(e) => setNotes(e.target.value)}
           value={notes}
         />
+        {/* {formError && (
+          <p className={styles.error}>{formError}</p>
+        )} */}
       </div>
 
       <div className={styles.buttons}>
