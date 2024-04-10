@@ -5,7 +5,6 @@ const useUrlPosition = () => {
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
 
-  if (!lat || !lng) return null;
   return { lat, lng };
 };
 
