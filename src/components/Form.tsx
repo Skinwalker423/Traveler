@@ -1,10 +1,11 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./Form.module.css";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
+import useUrlPosition from "../hooks/useUrlPosition";
 // import { convertToEmoji } from "../utils";
 
 function Form() {
@@ -13,8 +14,26 @@ function Form() {
   const [date, setDate] = useState<Date | string>(
     new Date()
   );
+  const { lat, lng } = useUrlPosition();
   const [notes, setNotes] = useState("");
   const navigate = useNavigate();
+
+  console.log("latlng", lat, lng);
+
+  useEffect(() => {
+    const fetchReverseGeo = async () => {
+      const response = await fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+      );
+      const city = await response.json();
+      console.log("cityName", city.city);
+      setCityName(city?.city || "");
+    };
+
+    if (lat || lng) {
+      fetchReverseGeo();
+    }
+  });
 
   return (
     <form className={styles.form}>
