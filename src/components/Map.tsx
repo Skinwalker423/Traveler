@@ -95,7 +95,7 @@ export const MapForm = () => {
   useMapEvents({
     click(e) {
       navigate(
-        `form?lat=${e.latlng.lat}lng=${e.latlng.lng}`
+        `form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`
       );
     },
   });

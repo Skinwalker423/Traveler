@@ -6,11 +6,14 @@ import styles from "./Form.module.css";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import useUrlPosition from "../hooks/useUrlPosition";
-// import { convertToEmoji } from "../utils";
+import Spinner from "./Spinner";
+import { convertToEmoji } from "../utils";
 
 function Form() {
   const [cityName, setCityName] = useState("");
-  // const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("");
+  const [isLoadingGeo, setIsLoadingGeo] =
+    useState<boolean>(false);
   const [date, setDate] = useState<Date | string>(
     new Date()
   );
@@ -18,22 +21,37 @@ function Form() {
   const [notes, setNotes] = useState("");
   const navigate = useNavigate();
 
-  console.log("latlng", lat, lng);
+  const [emoji, setEmoji] = useState("");
+
+  console.log("country", country);
 
   useEffect(() => {
     const fetchReverseGeo = async () => {
-      const response = await fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
-      );
-      const city = await response.json();
-      console.log("cityName", city.city);
-      setCityName(city?.city || "");
+      setIsLoadingGeo(true);
+      try {
+        if (!lat || !lng) return;
+        const response = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+        );
+        const data = await response.json();
+        console.log("cityName", data);
+        const emo = convertToEmoji(data.countryCode);
+        setCityName(data?.city || data?.locality || "");
+        setCountry(data.countryName || "");
+        setEmoji(emo);
+      } catch (error) {
+        console.error("Could not retrive city name");
+      } finally {
+        setIsLoadingGeo(false);
+      }
     };
 
-    if (lat || lng) {
+    if (lat && lng) {
       fetchReverseGeo();
     }
-  });
+  }, [lat, lng]);
+
+  if (isLoadingGeo) return <Spinner />;
 
   return (
     <form className={styles.form}>
@@ -44,7 +62,7 @@ function Form() {
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
         />
-        {/* <span className={styles.flag}>{emoji}</span> */}
+        <span className={styles.flag}>{emoji}</span>
       </div>
 
       <div className={styles.row}>
