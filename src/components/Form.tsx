@@ -1,6 +1,6 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import styles from "./Form.module.css";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,10 @@ function Form() {
   const [emoji, setEmoji] = useState("");
 
   console.log("country", country);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
   useEffect(() => {
     const fetchReverseGeo = async () => {
@@ -68,7 +72,7 @@ function Form() {
   if (geoError) return <Message message={geoError} />;
 
   return (
-    <form className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.row}>
         <label htmlFor='cityName'>City name</label>
         <input
