@@ -1,4 +1,4 @@
-import { City } from "../types";
+import { City, NewCity } from "../types";
 
 export const fetchCities = async () => {
   try {
@@ -12,7 +12,7 @@ export const fetchCities = async () => {
   }
 };
 
-export const createCity = async (newCity: City) => {
+export const createCity = async (newCity: NewCity) => {
   if (!newCity) return;
   try {
     const response = await fetch(

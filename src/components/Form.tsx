@@ -13,6 +13,8 @@ import Message from "./Message";
 import { convertToEmoji } from "../utils";
 
 import styles from "./Form.module.css";
+import { createCity } from "../actions";
+import { NewCity } from "../types";
 
 function Form() {
   const [cityName, setCityName] = useState("");
@@ -26,13 +28,6 @@ function Form() {
   const navigate = useNavigate();
 
   const [emoji, setEmoji] = useState("");
-
-  console.log("country", country);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("form submitted", cityName, date, notes);
-  };
 
   useEffect(() => {
     const fetchReverseGeo = async () => {
@@ -73,6 +68,28 @@ function Form() {
       <Message message={"Start by clicking on the map"} />
     );
   if (geoError) return <Message message={geoError} />;
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!cityName || !date) return;
+
+    console.log("form submitted", cityName, date);
+
+    const newCity: NewCity = {
+      cityName,
+      date,
+      country,
+      emoji,
+      notes: notes ? notes : "",
+      position: {
+        lat,
+        lng,
+      },
+    };
+
+    console.log("new city", newCity);
+    createCity(newCity);
+  };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
