@@ -59,7 +59,7 @@ function City() {
       </div>
 
       <div>
-        <Button type='back'>Back</Button>
+        <Button theme='back'>Back</Button>
       </div>
     </div>
   );

@@ -44,7 +44,7 @@ const Map = () => {
   return (
     <div className={styles.mapContainer}>
       {!geolocationPosition && (
-        <Button type='position' onClick={getPosition}>
+        <Button theme='position' onClick={getPosition}>
           {isLoadingPosition
             ? "Loading..."
             : "Use your position"}
