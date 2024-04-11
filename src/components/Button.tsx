@@ -5,24 +5,26 @@ import { useNavigate } from "react-router-dom";
 
 interface ButtonProps extends PropsWithChildren {
   onClick?: () => void;
-  type?: "back" | "primary" | "position";
+  theme?: "back" | "primary" | "position";
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button = ({
   children,
   onClick,
-  type = "primary",
+  theme = "primary",
   disabled = false,
+  type = "button",
 }: ButtonProps) => {
   const navigate = useNavigate();
-  if (type === "back") {
+  if (theme === "back") {
     return (
       <button
+        type={type}
         disabled={disabled}
-        className={`${styles.btn} ${styles[type]}`}
-        onClick={(e) => {
-          e.preventDefault();
+        className={`${styles.btn} ${styles[theme]}`}
+        onClick={() => {
           navigate(-1);
         }}
       >
@@ -32,9 +34,9 @@ const Button = ({
   } else {
     return (
       <button
-        className={`${styles.btn} ${styles[type]}`}
-        onClick={(e) => {
-          e.preventDefault();
+        type={type}
+        className={`${styles.btn} ${styles[theme]}`}
+        onClick={() => {
           if (!onClick) return;
           onClick();
         }}

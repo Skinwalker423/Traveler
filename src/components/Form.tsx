@@ -1,5 +1,6 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
+import DatePicker from "react-datepicker";
 import { FormEvent, useEffect, useState } from "react";
 
 import styles from "./Form.module.css";
@@ -10,15 +11,15 @@ import Spinner from "./Spinner";
 import { convertToEmoji } from "../utils";
 import Message from "./Message";
 
+import "react-datepicker/dist/react-datepicker.css";
+
 function Form() {
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [isLoadingGeo, setIsLoadingGeo] =
     useState<boolean>(false);
   const [geoError, setGeoError] = useState("");
-  const [date, setDate] = useState<Date | string>(
-    new Date()
-  );
+  const [date, setDate] = useState<Date>(new Date());
   const { lat, lng } = useUrlPosition();
   const [notes, setNotes] = useState("");
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ function Form() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("form submitted", cityName, date, notes);
   };
 
   useEffect(() => {
@@ -87,11 +89,16 @@ function Form() {
         <label htmlFor='date'>
           When did you go to {cityName}?
         </label>
-        <input
+        <DatePicker
+          value={date.toDateString()}
+          selected={date}
+          onChange={(date: Date) => setDate(date)}
+        />
+        {/* <input
           id='date'
           onChange={(e) => setDate(e.target.value)}
           value={date.toLocaleString()}
-        />
+        /> */}
       </div>
 
       <div className={styles.row}>
@@ -109,9 +116,9 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button>Add</Button>
+        <Button type='submit'>Add</Button>
         <Button
-          type='back'
+          theme='back'
           onClick={() => {
             navigate(-1);
           }}
