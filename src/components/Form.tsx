@@ -15,8 +15,10 @@ import { convertToEmoji } from "../utils";
 import styles from "./Form.module.css";
 import { createCity } from "../actions";
 import { NewCity } from "../types";
+import useLocationContext from "../hooks/useLocationContext";
 
 function Form() {
+  const { addCityToList } = useLocationContext();
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [isLoadingGeo, setIsLoadingGeo] =
@@ -69,7 +71,9 @@ function Form() {
     );
   if (geoError) return <Message message={geoError} />;
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     if (!cityName || !date) return;
 
@@ -88,7 +92,11 @@ function Form() {
     };
 
     console.log("new city", newCity);
-    createCity(newCity);
+    const city = await createCity(newCity);
+
+    if (city) {
+      addCityToList(city);
+    }
   };
 
   return (

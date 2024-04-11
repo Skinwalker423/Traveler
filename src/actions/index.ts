@@ -12,8 +12,9 @@ export const fetchCities = async () => {
   }
 };
 
-export const createCity = async (newCity: NewCity) => {
-  if (!newCity) return;
+export const createCity = async (
+  newCity: NewCity
+): Promise<City | undefined> => {
   try {
     const response = await fetch(
       "http://localhost:3000/cities",
@@ -25,7 +26,7 @@ export const createCity = async (newCity: NewCity) => {
         },
       }
     );
-    const data = await response.json();
+    const data: City = await response.json();
     console.log("data after create city", data);
     return data;
   } catch (error: any) {

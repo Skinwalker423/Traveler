@@ -11,6 +11,7 @@ interface LocationContextType {
   isLoading: boolean;
   currentCity?: City;
   fetchCurrentCity: (cityId: string) => Promise<void>;
+  addCityToList: (city: City) => void;
 }
 
 export const LocationContext = createContext(
@@ -25,6 +26,10 @@ export const LocationProvider = ({
   const [cities, setCities] = useState<City[]>([]);
   const [currentCity, setCurrentCity] = useState<City>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const addCityToList = (city: City) => {
+    setCities((cities) => [...cities, city]);
+  };
 
   const fetchCurrentCity = async (
     cityId: string
@@ -68,6 +73,7 @@ export const LocationProvider = ({
     isLoading,
     currentCity,
     fetchCurrentCity,
+    addCityToList,
   };
 
   return (
