@@ -14,6 +14,24 @@ const CityItem = ({ city }: CityProps) => {
   const { currentCity } = useLocationContext();
 
   const isActive = currentCity?.id === city.id;
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/cities/${city.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log("city deleted", data);
+    } catch (error) {}
+  };
+
   return (
     <li
       className={`${
@@ -27,6 +45,12 @@ const CityItem = ({ city }: CityProps) => {
         <span className={styles.emoji}>{city.emoji} </span>
         <h3 className={styles.name}>{city.cityName}</h3>
         <time className={styles.date}>{formattedDate}</time>
+        <button
+          className={styles.deleteBtn}
+          onClick={handleDelete}
+        >
+          &times;
+        </button>
       </Link>
     </li>
   );

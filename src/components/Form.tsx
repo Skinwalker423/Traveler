@@ -18,7 +18,7 @@ import { NewCity } from "../types";
 import useLocationContext from "../hooks/useLocationContext";
 
 function Form() {
-  const { addCityToList } = useLocationContext();
+  const { addCityToList, isLoading } = useLocationContext();
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [isLoadingGeo, setIsLoadingGeo] =
@@ -109,7 +109,12 @@ function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form
+      onSubmit={handleSubmit}
+      className={`${styles.form} ${
+        isLoading ? styles.loading : ""
+      }`}
+    >
       <div className={styles.row}>
         <label htmlFor='cityName'>City name</label>
         <input
