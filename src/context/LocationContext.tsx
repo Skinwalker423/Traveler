@@ -12,6 +12,7 @@ interface LocationContextType {
   currentCity?: City;
   fetchCurrentCity: (cityId: string) => Promise<void>;
   addCityToList: (city: City) => void;
+  removeCityFromList: (cityId: string) => void;
 }
 
 export const LocationContext = createContext(
@@ -24,16 +25,28 @@ export const LocationProvider = ({
   children: ReactNode;
 }) => {
   const [cities, setCities] = useState<City[]>([]);
-  const [currentCity, setCurrentCity] = useState<City>();
+  const [currentCity, setCurrentCity] = useState<
+    City | undefined
+  >();
   const [isLoading, setIsLoading] = useState(false);
 
   const addCityToList = (city: City) => {
     setCities((cities) => [...cities, city]);
   };
+  const removeCityFromList = (cityId: string) => {
+    const filteredCities = cities.filter(
+      (city) => city.id !== cityId
+    );
+    setCities(filteredCities);
+  };
 
   const fetchCurrentCity = async (
     cityId: string
   ): Promise<void> => {
+    if (!cityId) {
+      setIsLoading(false);
+      return;
+    }
     try {
       setIsLoading(true);
       const response = await fetch(
@@ -74,6 +87,7 @@ export const LocationProvider = ({
     currentCity,
     fetchCurrentCity,
     addCityToList,
+    removeCityFromList,
   };
 
   return (

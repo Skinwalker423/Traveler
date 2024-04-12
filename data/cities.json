@@ -35,66 +35,6 @@
         "lng": 13.376933665713324
       },
       "id": "98443197"
-    },
-    {
-      "cityName": "East Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": "984431484"
-    },
-    {
-      "id": "5b42",
-      "cityName": "Burgstall",
-      "date": "2024-04-11T00:56:51.691Z",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "notes": "It was a blast!",
-      "position": {
-        "lat": "52.391472141771615",
-        "lng": "11.716006938622613"
-      }
-    },
-    {
-      "id": "bb7c",
-      "cityName": "Beja",
-      "date": "2024-04-11T01:07:38.359Z",
-      "country": "Portugal",
-      "emoji": "🇵🇹",
-      "notes": "boring place",
-      "position": {
-        "lat": "37.98620194539896",
-        "lng": "-7.868045680370274"
-      }
-    },
-    {
-      "id": "62a5",
-      "cityName": "Wolfenbuttel",
-      "date": "2024-04-03T00:20:23.000Z",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "notes": "festive community",
-      "position": {
-        "lat": "52.150050916677394",
-        "lng": "10.486150938548093"
-      }
-    },
-    {
-      "id": "da84",
-      "cityName": "Leipzig",
-      "date": "2024-04-12T00:28:27.648Z",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "notes": "amazing",
-      "position": {
-        "lat": "51.32320198215238",
-        "lng": "12.403305275391526"
-      }
     }
   ]
 }
