@@ -71,6 +71,18 @@
         "lat": "37.98620194539896",
         "lng": "-7.868045680370274"
       }
+    },
+    {
+      "id": "62a5",
+      "cityName": "Wolfenbuttel",
+      "date": "2024-04-03T00:20:23.000Z",
+      "country": "Germany",
+      "emoji": "🇩🇪",
+      "notes": "festive community",
+      "position": {
+        "lat": "52.150050916677394",
+        "lng": "10.486150938548093"
+      }
     }
   ]
 }

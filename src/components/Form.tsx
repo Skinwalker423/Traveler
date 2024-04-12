@@ -27,6 +27,7 @@ function Form() {
   const [date, setDate] = useState<Date>(new Date());
   const { lat, lng } = useUrlPosition();
   const [notes, setNotes] = useState("");
+  const [isAddingCity, setIsAddingCity] = useState(false);
   const navigate = useNavigate();
 
   const [emoji, setEmoji] = useState("");
@@ -75,9 +76,11 @@ function Form() {
     e: FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    if (!cityName || !date) return;
-
-    console.log("form submitted", cityName, date);
+    setIsAddingCity(true);
+    if (!cityName || !date) {
+      setIsAddingCity(false);
+      return;
+    }
 
     const newCity: NewCity = {
       cityName,
@@ -92,10 +95,16 @@ function Form() {
     };
 
     console.log("new city", newCity);
-    const city = await createCity(newCity);
+    try {
+      const city = await createCity(newCity);
 
-    if (city) {
-      addCityToList(city);
+      if (city) {
+        addCityToList(city);
+        setIsAddingCity(false);
+        navigate("/app/cities");
+      }
+    } catch (error) {
+      setIsAddingCity(false);
     }
   };
 
@@ -137,7 +146,9 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button type='submit'>Add</Button>
+        <Button disabled={isAddingCity} type='submit'>
+          {isAddingCity ? "Adding..." : "Add"}
+        </Button>
         <Button
           theme='back'
           onClick={() => {
