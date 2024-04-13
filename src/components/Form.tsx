@@ -18,7 +18,10 @@ import { NewCity } from "../types";
 import useLocationContext from "../hooks/useLocationContext";
 
 function Form() {
-  const { addCityToList, isLoading } = useLocationContext();
+  const {
+    addCityToList,
+    state: { isLoading },
+  } = useLocationContext();
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [isLoadingGeo, setIsLoadingGeo] =

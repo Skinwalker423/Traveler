@@ -10,8 +10,10 @@ import Button from "./Button";
 function City() {
   // TEMP DATA
   const params = useParams();
-  const { isLoading, currentCity, fetchCurrentCity } =
-    useLocationContext();
+  const {
+    state: { isLoading, currentCity },
+    fetchCurrentCity,
+  } = useLocationContext();
   // const [city, setCity] = useState<City | null>();
   console.log("params", params);
 

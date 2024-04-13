@@ -3,7 +3,6 @@ import {
   createContext,
   useEffect,
   useReducer,
-  useState,
 } from "react";
 import { City } from "../types";
 
@@ -22,21 +21,21 @@ export const LocationContext = createContext(
 interface StateProps {
   cities: City[];
   isLoading: boolean;
-  currentCity: City | {};
+  currentCity?: City;
   error?: string;
 }
 
 const initialState: StateProps = {
   cities: [],
   isLoading: false,
-  currentCity: {},
+  currentCity: undefined,
   error: "",
 };
 
 export type ActionsMap = {
   "cities/loaded": City[];
   "cities/created": City;
-  "cities/deleted": string;
+  "cities/deleted": City[];
   loading: undefined;
   rejected: string;
   "cities/currentCity": City;
@@ -66,19 +65,19 @@ function reducer(state: StateProps, action: Actions) {
       return {
         ...state,
         cities: [...state.cities, action.payload],
+        isLoading: false,
       };
     case "cities/deleted":
-      const filteredList = state.cities.filter(
-        (city) => city.id !== action.payload
-      );
       return {
         ...state,
-        cities: filteredList,
+        cities: action.payload,
+        isLoading: false,
       };
     case "cities/currentCity":
       return {
         ...state,
         currentCity: action.payload,
+        isLoading: false,
       };
 
     case "rejected":
@@ -110,13 +109,16 @@ export const LocationProvider = ({
   // const [isLoading, setIsLoading] = useState(false);
 
   const addCityToList = (city: City) => {
-    setCities((cities) => [...cities, city]);
+    dispatch({ type: "cities/created", payload: city });
   };
   const removeCityFromList = (cityId: string) => {
-    const filteredCities = cities.filter(
+    const filteredCities = state.cities.filter(
       (city) => city.id !== cityId
     );
-    setCities(filteredCities);
+    dispatch({
+      type: "cities/deleted",
+      payload: filteredCities,
+    });
   };
 
   const fetchCurrentCity = async (

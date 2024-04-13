@@ -5,7 +5,9 @@ import Message from "./Message";
 import useLocationContext from "../hooks/useLocationContext";
 
 const CityList = () => {
-  const { cities, isLoading } = useLocationContext();
+  const {
+    state: { cities, isLoading },
+  } = useLocationContext();
 
   if (isLoading) return <Spinner />;
 

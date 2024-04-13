@@ -14,8 +14,10 @@ const CityItem = ({ city }: CityProps) => {
   const formattedDate = formatDate(city.date);
   const [isDeletingCity, setIsDeletingCity] =
     useState(false);
-  const { currentCity, removeCityFromList } =
-    useLocationContext();
+  const {
+    state: { currentCity },
+    removeCityFromList,
+  } = useLocationContext();
 
   const isActive = currentCity?.id === city.id;
 

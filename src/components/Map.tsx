@@ -16,7 +16,9 @@ import useUrlPosition from "../hooks/useUrlPosition";
 
 const Map = () => {
   const { lat, lng } = useUrlPosition();
-  const { cities } = useLocationContext();
+  const {
+    state: { cities },
+  } = useLocationContext();
 
   const [position, setPosition] =
     useState<[lat: number, lng: number]>();
