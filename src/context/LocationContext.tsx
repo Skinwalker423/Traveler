@@ -32,7 +32,20 @@ const initialState: StateProps = {
   currentCity: {},
 };
 
-function reducer(state: StateProps, action) {
+export type ActionsMap = {
+  "cities/loaded": City[];
+  "cities/created": City;
+  "cities/deleted": string;
+};
+
+export type Actions = {
+  [Key in keyof ActionsMap]: {
+    type: Key;
+    payload: ActionsMap[Key];
+  };
+}[keyof ActionsMap];
+
+function reducer(state: StateProps, action: Actions) {
   switch (action.type) {
     case "cities/loaded":
       return {
