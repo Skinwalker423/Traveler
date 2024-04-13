@@ -8,9 +8,8 @@ import {
 import { City } from "../types";
 
 interface LocationContextType {
-  cities: City[];
-  isLoading: boolean;
-  currentCity?: City;
+  state: StateProps;
+  dispatch: React.Dispatch<Actions>;
   fetchCurrentCity: (cityId: string) => Promise<void>;
   addCityToList: (city: City) => void;
   removeCityFromList: (cityId: string) => void;
@@ -24,18 +23,23 @@ interface StateProps {
   cities: City[];
   isLoading: boolean;
   currentCity: City | {};
+  error?: string;
 }
 
 const initialState: StateProps = {
   cities: [],
   isLoading: false,
   currentCity: {},
+  error: "",
 };
 
 export type ActionsMap = {
   "cities/loaded": City[];
   "cities/created": City;
   "cities/deleted": string;
+  loading: undefined;
+  rejected: string;
+  "cities/currentCity": City;
 };
 
 export type Actions = {
@@ -47,6 +51,11 @@ export type Actions = {
 
 function reducer(state: StateProps, action: Actions) {
   switch (action.type) {
+    case "loading":
+      return {
+        ...state,
+        isLoading: true,
+      };
     case "cities/loaded":
       return {
         ...state,
@@ -65,6 +74,18 @@ function reducer(state: StateProps, action: Actions) {
       return {
         ...state,
         cities: filteredList,
+      };
+    case "cities/currentCity":
+      return {
+        ...state,
+        currentCity: action.payload,
+      };
+
+    case "rejected":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
       };
 
     default:
@@ -102,47 +123,60 @@ export const LocationProvider = ({
     cityId: string
   ): Promise<void> => {
     if (!cityId) {
-      setIsLoading(false);
       return;
     }
     try {
-      setIsLoading(true);
+      dispatch({ type: "loading", payload: undefined });
       const response = await fetch(
         `http://localhost:3000/cities/${cityId}`
       );
 
-      const data = await response.json();
-      setCurrentCity(data);
+      const data: City = await response.json();
+      dispatch({
+        type: "cities/currentCity",
+        payload: data,
+      });
     } catch (error: any) {
       console.error(error.message);
-    } finally {
-      setIsLoading(false);
+      dispatch({
+        type: "rejected",
+        payload:
+          error?.message || "problem getting current city",
+      });
     }
   };
 
   useEffect(() => {
     const fetchCities = async () => {
-      setIsLoading(true);
+      dispatch({
+        type: "loading",
+        payload: undefined,
+      });
       try {
         const response = await fetch(
           "http://localhost:3000/cities"
         );
-        const citiesData = await response.json();
+        const citiesData: City[] = await response.json();
 
-        setCities(citiesData);
+        dispatch({
+          type: "cities/loaded",
+          payload: citiesData,
+        });
       } catch (error: any) {
         console.error(error.message);
-      } finally {
-        setIsLoading(false);
+        dispatch({
+          type: "rejected",
+          payload:
+            error?.message || "problem loading cities",
+        });
       }
     };
     fetchCities();
   }, []);
 
   const value = {
-    cities,
-    isLoading,
-    currentCity,
+    state,
+    dispatch,
     fetchCurrentCity,
     addCityToList,
     removeCityFromList,
