@@ -38,7 +38,7 @@ export type ActionsMap = {
   "cities/deleted": City[];
   loading: undefined;
   rejected: string;
-  "cities/currentCity": City;
+  "city/loaded": City;
 };
 
 export type Actions = {
@@ -66,6 +66,7 @@ function reducer(state: StateProps, action: Actions) {
         ...state,
         cities: [...state.cities, action.payload],
         isLoading: false,
+        currentCity: action.payload,
       };
     case "cities/deleted":
       return {
@@ -73,7 +74,7 @@ function reducer(state: StateProps, action: Actions) {
         cities: action.payload,
         isLoading: false,
       };
-    case "cities/currentCity":
+    case "city/loaded":
       return {
         ...state,
         currentCity: action.payload,
@@ -102,12 +103,6 @@ export const LocationProvider = ({
     initialState
   );
 
-  // const [cities, setCities] = useState<City[]>([]);
-  // const [currentCity, setCurrentCity] = useState<
-  //   City | undefined
-  // >();
-  // const [isLoading, setIsLoading] = useState(false);
-
   const addCityToList = (city: City) => {
     dispatch({ type: "cities/created", payload: city });
   };
@@ -124,7 +119,7 @@ export const LocationProvider = ({
   const fetchCurrentCity = async (
     cityId: string
   ): Promise<void> => {
-    if (!cityId) {
+    if (!cityId || cityId === state.currentCity?.id) {
       return;
     }
     try {
@@ -135,7 +130,7 @@ export const LocationProvider = ({
 
       const data: City = await response.json();
       dispatch({
-        type: "cities/currentCity",
+        type: "city/loaded",
         payload: data,
       });
     } catch (error: any) {
