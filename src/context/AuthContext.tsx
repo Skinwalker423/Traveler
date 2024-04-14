@@ -12,6 +12,7 @@ export type AuthActionsMap = {
   "auth/login": User;
   "auth/logout": undefined;
   "auth/error": string;
+  loading: undefined;
 };
 
 export type AuthActions = {
@@ -24,11 +25,15 @@ export type AuthActions = {
 interface AuthState {
   user: User | null;
   error: string;
+  isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
   error: "",
+  isAuthenticated: false,
+  isLoading: false,
 };
 
 interface AuthContextProps {
@@ -44,6 +49,8 @@ const reducer = (state: AuthState, action: AuthActions) => {
         ...state,
         user: action.payload,
         error: "",
+        isAuthenticated: true,
+        isLoading: false,
       };
 
     case "auth/logout":
@@ -51,11 +58,19 @@ const reducer = (state: AuthState, action: AuthActions) => {
         ...state,
         user: null,
         error: "",
+        isAuthenticated: false,
+        isLoading: false,
       };
     case "auth/error":
       return {
         ...state,
         error: action.payload || "problem finding user",
+        isLoading: false,
+      };
+    case "loading":
+      return {
+        ...state,
+        isLoading: true,
       };
 
     default:
