@@ -48,5 +48,12 @@
         "lng": "-8.008132533773463"
       }
     }
+  ],
+  "users": [
+    {
+      "id": "wefwefwefw",
+      "email": "123@gmail.com",
+      "password": "123456"
+    }
   ]
 }

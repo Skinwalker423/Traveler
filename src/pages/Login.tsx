@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from "./Login.module.css";
 import { PagNav } from "../components/PagNav";
+import useAuth from "../hooks/useAuth";
 
 export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
   const [email, setEmail] = useState("jack@example.com");
   const [password, setPassword] = useState("qwerty");
 
+  const { state, logIn } = useAuth();
+
+  console.log("user", state.user);
+
+  const handleLogin = async (
+    e: FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    if (!email || !password) return;
+    await logIn(email, password);
+  };
+
   return (
     <main className={styles.login}>
       <PagNav />
-      <form className={styles.form}>
+      <form onSubmit={handleLogin} className={styles.form}>
         <div className={styles.row}>
           <label htmlFor='email'>Email address</label>
           <input
@@ -30,6 +43,7 @@ export default function Login() {
             value={password}
           />
         </div>
+        {state.error && <p>{state.error}</p>}
 
         <div>
           <button>Login</button>
