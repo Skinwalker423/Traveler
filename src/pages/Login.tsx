@@ -1,7 +1,8 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { PagNav } from "../components/PagNav";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
@@ -9,8 +10,15 @@ export default function Login() {
   const [password, setPassword] = useState("qwerty");
 
   const { state, logIn } = useAuth();
+  const navigate = useNavigate();
 
   console.log("user", state.user);
+
+  useEffect(() => {
+    if (state.user) {
+      navigate("/app");
+    }
+  }, [state.user]);
 
   const handleLogin = async (
     e: FormEvent<HTMLFormElement>

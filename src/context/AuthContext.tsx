@@ -117,7 +117,9 @@ export const Authprovider = ({
     }
   };
 
-  const logOut = () => {};
+  const logOut = () => {
+    dispatch({ type: "auth/logout", payload: undefined });
+  };
 
   const value = {
     state,
