@@ -13,8 +13,6 @@ export default function Login() {
   const { state, logIn } = useAuth();
   const navigate = useNavigate();
 
-  console.log("user", state.isAuthenticated);
-
   useEffect(() => {
     if (state.isAuthenticated) {
       navigate("/app");
@@ -41,6 +39,7 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             disabled={state.isLoading}
+            required
           />
         </div>
 
@@ -52,6 +51,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             disabled={state.isLoading}
+            required
           />
         </div>
         {state.error && (

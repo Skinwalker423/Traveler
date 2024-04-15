@@ -20,8 +20,9 @@ const Map = () => {
     state: { cities },
   } = useLocationContext();
 
-  const [position, setPosition] =
-    useState<[lat: number, lng: number]>();
+  const [position, setPosition] = useState<
+    [lat: number, lng: number]
+  >([0, 0]);
 
   const {
     isLoading: isLoadingPosition,

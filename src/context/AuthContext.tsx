@@ -6,6 +6,9 @@ import {
 
 type User = {
   email: string;
+  name: string;
+  avatar: string;
+  id: string;
 };
 
 export type AuthActionsMap = {
@@ -111,10 +114,18 @@ export const Authprovider = ({
 
       const foundUser = user[0];
 
-      if (foundUser.password === password) {
+      if (
+        foundUser.password === password &&
+        foundUser.email === email
+      ) {
         dispatch({
           type: "auth/login",
-          payload: { email: foundUser.email },
+          payload: {
+            email: foundUser.email,
+            avatar: foundUser.avatar,
+            name: foundUser.name,
+            id: foundUser.id,
+          },
         });
       } else {
         dispatch({

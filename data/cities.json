@@ -52,8 +52,17 @@
   "users": [
     {
       "id": "wefwefwefw",
+      "name": "Skin",
       "email": "123@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "avatar": "https://i.pravatar.cc/100?u=zz"
+    },
+    {
+      "id": "wewthh45h4",
+      "name": "Jack",
+      "email": "jack@example.com",
+      "password": "qwerty",
+      "avatar": "https://i.pravatar.cc/100?u=zz"
     }
   ]
 }
