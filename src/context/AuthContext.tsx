@@ -71,6 +71,7 @@ const reducer = (state: AuthState, action: AuthActions) => {
       return {
         ...state,
         isLoading: true,
+        error: "",
       };
 
     default:
@@ -94,12 +95,12 @@ export const Authprovider = ({
 
   const logIn = async (email: string, password: string) => {
     try {
-      console.log("email pw", email, password);
+      dispatch({ type: "loading", payload: undefined });
       const response = await fetch(
         `http://localhost:3000/users/?email=${email}`
       );
       const user = await response.json();
-      console.log("user response", user);
+
       if (!user.length) {
         dispatch({
           type: "auth/error",

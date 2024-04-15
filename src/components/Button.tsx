@@ -35,6 +35,7 @@ const Button = ({
     return (
       <button
         type={type}
+        disabled={disabled}
         className={`${styles.btn} ${styles[theme]}`}
         onClick={() => {
           if (!onClick) return;
