@@ -19,6 +19,8 @@ const CityItem = ({ city }: CityProps) => {
     removeCityFromList,
   } = useLocationContext();
 
+  console.log("current city", currentCity);
+
   const isActive = currentCity?.id === city.id;
 
   const handleDelete = async (

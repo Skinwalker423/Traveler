@@ -15,7 +15,6 @@ function City() {
     fetchCurrentCity,
   } = useLocationContext();
   // const [city, setCity] = useState<City | null>();
-  console.log("params", params);
 
   useEffect(() => {
     if (params.cityId) fetchCurrentCity(params.cityId);
