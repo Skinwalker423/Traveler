@@ -1,14 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styles from "./User.module.css";
 
 function User() {
   const { state, logOut } = useAuth();
+  const navigate = useNavigate();
   const user = state.user;
 
   if (!user) return null;
 
   function handleClick() {
     logOut();
+    navigate("/");
   }
 
   return (
