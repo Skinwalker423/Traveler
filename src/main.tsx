@@ -20,6 +20,7 @@ import Form from "./components/Form";
 import { LocationProvider } from "./context/LocationContext";
 import City from "./components/City";
 import { Authprovider } from "./context/AuthContext";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
   },
   {
     path: "app",
-    element: <AppLayout />,
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
 
     children: [
       {
